@@ -2,7 +2,7 @@ module Data.Num where
 --
 import Control.Category
 
-class Num k a | a -> k where
+class Num k a where
   (+)    :: forall r. O2 k r a => k r a -> k r a -> k r a
   (-)    :: forall r. O2 k r a => k r a -> k r a -> k r a
   (*)    :: forall r. O2 k r a => k r a -> k r a -> k r a
