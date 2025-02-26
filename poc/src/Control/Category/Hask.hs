@@ -1,20 +1,17 @@
+{-# LANGUAGE UndecidableInstances #-}
 module Control.Category.Hask where
-
+-- base
+import Prelude.Base qualified as Base
+--
 import Control.Category
+import Control.Functor
 
-class HaskObject a
-
--- | Initial Hask object.
-data Empty
-instance HaskObject Empty
-
--- | Terminal Hask object.
-instance HaskObject ()
 
 newtype Hask a b = MkHask { unHask :: a -> b }
-
 mkHaskObject :: forall r a. O2 Hask r a => a -> Hask r a
 mkHaskObject a = MkHask (\_ -> a)
+
+class HaskObject a
 
 instance Category Hask where
   type instance Object Hask = HaskObject
@@ -23,12 +20,24 @@ instance Category Hask where
 
   (MkHask bc) . (MkHask ab) = MkHask (\a -> bc (ab a))
 
+-- | Initial Hask object.
+data Empty
+instance HaskObject Empty
+
+-- | Terminal Hask object.
+instance HaskObject ()
+
+-- | List object.
+instance O1 Hask a => HaskObject [a]
+
+-- | All Hask functors are endo-functors.
+instance Base.Functor m => Functor Hask Hask m where
+  cfmap (MkHask f) = MkHask \ma -> Base.fmap f ma
+
 -- TODO, make varidic calls
 
-runHask0 :: O1 Hask a =>
-  (forall r. O1 Hask r => Hask r a) ->
-  a
-runHask0 f = unHask (f . mkHaskObject ()) ()
+runHask :: O2 Hask a b => Hask a b -> a -> b
+runHask m a = unHask m a
 
 runHask1 :: O2 Hask a b =>
   (forall r. O1 Hask r => Hask r a -> Hask r b) ->

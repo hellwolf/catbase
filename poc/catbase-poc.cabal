@@ -28,10 +28,10 @@ library
     --
     hs-source-dirs: src
     exposed-modules:
-      -- Category machinery
-      Control.Category
       -- Prelude
       Data.Num
+      Control.Category
+      Control.Functor
       Prelude.Catbase
       --
       Control.Category.Hask

@@ -1,6 +1,4 @@
 module Data.Num where
---
-import Control.Category
 
 class Num a where
   (+)    :: a -> a -> a
