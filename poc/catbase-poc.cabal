@@ -1,0 +1,62 @@
+cabal-version:      3.4
+name:               catbase-poc
+version:            0.1.0.0
+-- synopsis:
+-- description:
+license:            MIT
+license-file:       LICENSE
+author:             Miao, ZhiCheng
+maintainer:         zhicheng.miao@gmail.com
+-- copyright:
+category:           Prelude
+build-type:         Simple
+extra-doc-files:    CHANGELOG.md
+-- extra-source-files:
+
+common warnings
+    ghc-options: -Wall
+
+library
+    import:             warnings
+    default-language:   GHC2024
+    default-extensions: NoImplicitPrelude
+                        BlockArguments
+                        ImpredicativeTypes
+                        TypeFamilyDependencies
+                        FunctionalDependencies
+                        QuantifiedConstraints
+    --
+    hs-source-dirs: src
+    exposed-modules:
+      -- Category machinery
+      Control.Category
+      -- Prelude
+      Data.Num
+      Prelude.Catbase
+      --
+      Control.Category.Hask
+      Hask.Types.Int
+      Hask
+    -- other-modules:
+    -- other-extensions:
+    --
+    build-depends: base ^>=4.20.0.0,
+                   ghc-prim ^>= 0.11.0
+    mixins:        base hiding (Prelude),
+                   base (Prelude as Prelude.Base)
+
+executable catbase-poc
+    import:           warnings
+    default-language: GHC2024
+    default-extensions: NoImplicitPrelude
+                        ImpredicativeTypes
+    --
+    hs-source-dirs:   app
+    main-is:          Main.hs
+    -- other-modules:
+    -- other-extensions:
+    --
+    build-depends: base ^>=4.20.0.0,
+                   catbase-poc
+    mixins:        base hiding (Prelude),
+                   base (Prelude as Prelude.Base)
