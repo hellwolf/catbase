@@ -12,7 +12,7 @@ type Int' = GHC.Types.Int
 type Int = Hask () Int'
 instance HaskObject Int'
 
-instance Num Hask GHC.Types.Int where
+instance Num (Hask r Int') where
   (MkHask rx) + (MkHask ry) = MkHask \r -> rx r Base.+ ry r
   (MkHask rx) - (MkHask ry) = MkHask \r -> rx r Base.- ry r
   (MkHask rx) * (MkHask ry) = MkHask \r -> rx r Base.* ry r
