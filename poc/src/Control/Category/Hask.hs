@@ -24,6 +24,17 @@ instance Category Hask where
 data Empty
 instance HaskObject Empty
 
+-- | Morphism from initial object.
+type H a = Hask Empty a
+
+-- | Embedding the hask value through the initial object.
+hEmb :: a -> H a
+hEmb x = MkHask \_ -> x
+
+-- | Extract the hask value from its "initial morphism".
+hVal :: H a -> a
+hVal (MkHask fa) = fa Base.undefined
+
 -- | Terminal Hask object.
 instance HaskObject ()
 
@@ -33,6 +44,10 @@ instance O1 Hask a => HaskObject [a]
 -- | All Hask functors are endo-functors.
 instance Base.Functor m => Functor Hask Hask m where
   cfmap (MkHask f) = MkHask \ma -> Base.fmap f ma
+
+-- | Create a 2-ary Hask function from two "initial morphisms".
+hFn :: O2 Hask a b => (H a -> H b) -> Hask a b
+hFn f = MkHask \a -> let hb = f (MkHask \_ -> a) in hVal hb
 
 -- TODO, make varidic calls
 

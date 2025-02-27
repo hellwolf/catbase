@@ -40,8 +40,7 @@ library
     -- other-modules:
     -- other-extensions:
     --
-    build-depends: base ^>=4.20.0.0,
-                   ghc-prim ^>= 0.11.0
+    build-depends: base ^>=4.20.0.0
     mixins:        base hiding (Prelude),
                    base (Prelude as Prelude.Base)
 
@@ -49,6 +48,8 @@ executable catbase-poc
     import:           warnings
     default-language: GHC2024
     default-extensions: NoImplicitPrelude
+                        RebindableSyntax
+                        QualifiedDo
                         ImpredicativeTypes
     --
     hs-source-dirs:   app

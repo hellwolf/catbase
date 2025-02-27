@@ -10,6 +10,6 @@ f :: forall a. Num a => a -> a -> a
 f a b = a + a * b
 
 main :: Base.IO ()
-main = do
-  Base.print (runHask2 f (3 :: Int') (2 :: Int') :: Int')
-  Base.print (runHask (cfmap (MkHask (Base.+ (3 :: Int')))) ([1,2,3] :: [Int']))
+main = Base.do
+  Base.print (runHask (f 3 2 :: Int) Base.undefined)
+  Base.print (runHask (cfmap (hFn (+ (3 :: Int)))) [1,2,3])
