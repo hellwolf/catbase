@@ -24,6 +24,9 @@ instance Category Hask where
 data Empty
 instance HaskObject Empty
 
+empty :: Empty
+empty = Base.undefined
+
 -- | Morphism from initial object.
 type H a = Hask Empty a
 
@@ -33,7 +36,7 @@ hEmb x = MkHask \_ -> x
 
 -- | Extract the hask value from its "initial morphism".
 hVal :: H a -> a
-hVal (MkHask fa) = fa Base.undefined
+hVal (MkHask fa) = fa empty
 
 -- | Terminal Hask object.
 instance HaskObject ()

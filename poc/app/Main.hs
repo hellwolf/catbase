@@ -11,5 +11,5 @@ f a b = a + a * b
 
 main :: Base.IO ()
 main = Base.do
-  Base.print (runHask (f 3 2 :: Int) Base.undefined)
+  Base.print (runHask (f 3 2 :: Int) empty)
   Base.print (runHask (cfmap (hFn (+ (3 :: Int)))) [1,2,3])
